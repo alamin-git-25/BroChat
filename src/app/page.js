@@ -9,7 +9,7 @@ export default function Home() {
     <section className="overflow-hidden">
       <LandingPage />
       <KeyFeatures />
-      <Pricing />
+
       <Footer />
     </section>
   );

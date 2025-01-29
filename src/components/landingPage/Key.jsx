@@ -25,10 +25,10 @@ export default function KeyFeatures() {
             </div>
 
             {/* Animated Gradient Balls */}
-            <div className="absolute -top-20 left-20 bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating" />
-            <div className="absolute top-1/2 left-20 bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating delay-100" />
-            <div className="absolute top-[60%] left-[80%] bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating delay-200" />
-            <div className="absolute top-[20%] left-[50%] bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating delay-300" />
+            <div className="absolute -top-20 left-20 bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating z-10" />
+            <div className="absolute top-1/2 left-20 bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating delay-100 z-10" />
+            <div className="absolute top-[60%] left-[80%] bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating delay-200 z-10" />
+            <div className="absolute top-[20%] left-[50%] bg-gradient-to-t from-fuchsia-900 to-slate-600 w-[200px] h-[200px] rounded-full animate-floating delay-300 z-10" />
         </section>
     );
 }
@@ -36,7 +36,7 @@ export default function KeyFeatures() {
 function FeatureCard({ icon, title, description }) {
     return (
         <div className="bg-black/20 backdrop-blur-md w-full  p-6 rounded-2xl shadow-lg flex flex-col items-center text-center border border-white/20">
-            <Image src={icon} width={100} height={100} alt="" className="mb-4" />
+            <Image src={icon} width={150} height={150} alt="" className="mb-4" />
             <h3 className="text-lg font-semibold text-white">{title}</h3>
             <p className="text-gray-100 mt-2">{description}</p>
         </div>

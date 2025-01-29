@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MessageCircle, Users, Settings } from "lucide-react";
+import { MessageCircle, Users, Settings, Home } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -8,19 +8,17 @@ const ChatNav = () => {
     const [active, setActive] = useState("chat");
 
     const navItems = [
+        { label: "Home", icon: Home, id: "home", to: '/' },
         { label: "Chats", icon: MessageCircle, id: "chat", to: '/chat' },
         { label: "Contacts", icon: Users, id: "contacts", to: '/chat' },
         { label: "Settings", icon: Settings, id: "settings", to: '/chat' },
+
     ];
     const router = useRouter()
     return (
         <>
-            {/* Top Navigation for Mobile (App Name) */}
-            <div className="lg:hidden sticky top-0 z-50  w-full bg-white/20 shadow-md border-b ">
-                <div className="container mx-auto py-3 px-4 text-center">
-                    <h1 className="text-lg font-bold text-blue-600">BroChat</h1>
-                </div>
-            </div>
+
+
 
             {/* Bottom Navigation for Mobile */}
             <nav className="lg:hidden z-50 fixed bottom-0 left-0 w-full bg-white shadow-md border-t">
