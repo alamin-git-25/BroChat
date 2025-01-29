@@ -78,6 +78,10 @@ export default {
 					"100%": { opacity: "1" },
 				},
 			},
+			fontFamily: {
+				custom: ["Poppins", "serif"]
+			}
+
 		},
 	},
 	plugins: [require("tailwindcss-animate")],

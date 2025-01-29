@@ -508,7 +508,7 @@ export default function ChatPage() {
             <div className="relative flex flex-col m-auto w-full min-h-screen  rounded-lg shadow-md z-10">
                 {!joined ? (
                     <div className="w-96 flex justify-center m-auto bg-black/30 p-6 rounded-lg flex-col items-center">
-                        <h1 className="text-xl font-bold mb-4 text-center text-white">Join a Chat Room</h1>
+                        <h1 className="text-xl  mb-4 text-center text-white">Join a Chat Room</h1>
                         <input
                             type="text"
                             placeholder="Enter your username"
@@ -525,7 +525,7 @@ export default function ChatPage() {
                         />
                         <button
                             onClick={handleJoin}
-                            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-bold hover:bg-blue-600 transition"
+                            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg  hover:bg-blue-600 transition"
                         >
                             Join Room
                         </button>
@@ -534,7 +534,7 @@ export default function ChatPage() {
                         <div className="flex items-center w-full mt-4">
                             <button
                                 onClick={generateRoomId}
-                                className="bg-purple-500 w-full text-white py-2 px-4 rounded-s-lg font-bold hover:bg-purple-600 transition"
+                                className="bg-purple-500 w-full text-white py-2 px-4 rounded-s-lg  hover:bg-purple-600 transition"
                             >
                                 Generate Room ID
                             </button>
@@ -551,10 +551,10 @@ export default function ChatPage() {
                     <div className="flex flex-col flex-grow">
                         {/* Header */}
                         <div className="fixed w-full bg-white/30  backdrop-blur-md md:top-[7%] top-0 left-0 text-white py-3 px-6 flex justify-between items-center shadow-md rounded-t-lg">
-                            <h1 className="text-lg font-bold">Room: {room}</h1>
+                            <h1 className="text-lg ">Room ID: {room}</h1>
                             <button
                                 onClick={handleLeave}
-                                className="bg-red-500 px-4 py-2 rounded-lg font-bold text-sm hover:bg-red-600 transition"
+                                className="bg-red-500 px-4 py-2 rounded-lg  text-sm hover:bg-red-600 transition"
                             >
                                 <span className="flex  justify-center items-center gap-2">Leave <LogOut className="size-5" /></span>
                             </button>

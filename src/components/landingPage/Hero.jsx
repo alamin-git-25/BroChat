@@ -19,7 +19,7 @@ export default function Hero() {
                         <p className="text-xl md:text-3xl text-left mb-4">
                             Chat With Bhai Brother
                         </p>
-                        <Button onClick={() => router.push('/chat')} className="bg-white hover:bg-indigo-300 mb-8  text-gray-900 py-2 px-6 rounded-lg">
+                        <Button onClick={() => router.push('/chat')} className="bg-white  hover:bg-indigo-300 mb-8  text-gray-900 py-2 px-6 rounded-lg">
                             <MessageCircle /> Let's Chat
                         </Button>
                     </span>
