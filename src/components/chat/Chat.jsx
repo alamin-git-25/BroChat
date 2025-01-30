@@ -1,111 +1,33 @@
 "use client";
 import { socket } from "@/lib/socket";
 import { SendHorizonal, X, Clipboard, LogOut } from "lucide-react";  // Imported Clipboard icon for copy functionality
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";  // Import nanoid for generating unique room IDs
 
 export default function ChatPage() {
-    // const [room, setRoom] = useState("");
-    // const [username, setUsername] = useState("");
-    // const [joined, setJoined] = useState(false);
-    // const [messages, setMessages] = useState([]);
-    // const [message, setMessage] = useState("");
-    // const [repliedMessage, setRepliedMessage] = useState(null); // Store the replied message
-
-    // // Format the current time as HH:MM AM/PM
-    // const formatTime = () => {
-    //     const now = new Date();
-    //     return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    // };
-
-    // // Generate a unique room ID using nanoid
-    // const generateRoomId = () => {
-    //     const newRoomId = nanoid(10); // Generates a 10-character unique room ID
-    //     setRoom(newRoomId);  // Set the generated room ID in the state
-    // };
-
-    // // Handle copy room ID to clipboard
-    // const copyRoomId = () => {
-    //     navigator.clipboard.writeText(room);
-    // };
-
-    // useEffect(() => {
-    //     socket.on("message", (data) => {
-    //         setMessages((prev) => [...prev, { ...data, time: formatTime() }]);
-    //     });
-
-    //     socket.on("user_joined", (message) => {
-    //         setMessages((prev) => [...prev, { sender: "system", message, time: formatTime() }]);
-    //     });
-
-    //     socket.on("user_left", (message) => {
-    //         setMessages((prev) => [...prev, { sender: "system", message, time: formatTime() }]);
-    //     });
-
-    //     // Cleanup listeners
-    //     return () => {
-    //         socket.off("message");
-    //         socket.off("user_joined");
-    //         socket.off("user_left");
-    //     };
-    // }, []); // Dependency array ensures this runs only once
-
-    // const handleJoin = () => {
-    //     if (room && username) {
-    //         socket.emit("join-room", { room, username });
-    //         setJoined(true);
-    //     }
-    // };
-
-    // const handleLeave = () => {
-    //     socket.emit("leave-room", { room, username });
-    //     setJoined(false);
-    // };
-
-    // const sendMessage = () => {
-    //     if (message.trim()) {
-    //         const data = {
-    //             room,
-    //             message,
-    //             sender: username,
-    //             time: formatTime(),
-    //             repliedMessage, // Include the replied message if any
-    //         };
-    //         setMessages((prev) => [...prev, data]);
-    //         socket.emit("message", data); // Emit the message to the backend
-    //         setMessage(""); // Clear the input field
-    //         setRepliedMessage(null); // Clear the replied message after sending
-    //     }
-    // };
-
-    // const handleReply = (msg) => {
-    //     setRepliedMessage(msg); // Store the message being replied to
-    //     setMessage(`@${msg.sender}:`); // Optionally, pre-fill the input field with the reply
-    // };
-    const [room, setRoom] = useState(() => localStorage.getItem("room") || ""); // Restore room ID
-    const [username, setUsername] = useState(() => localStorage.getItem("username") || ""); // Restore username
+    const [room, setRoom] = useState("");
+    const [username, setUsername] = useState("");
     const [joined, setJoined] = useState(false);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
-    const [repliedMessage, setRepliedMessage] = useState(null);
+    const [repliedMessage, setRepliedMessage] = useState(null); // Store the replied message
 
-    const formatTime = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-    const generateRoomId = () => {
-        const newRoomId = nanoid(10);
-        setRoom(newRoomId);
-        localStorage.setItem("room", newRoomId); // Save room ID
+    // Format the current time as HH:MM AM/PM
+    const formatTime = () => {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     };
 
-    const copyRoomId = () => navigator.clipboard.writeText(room);
+    // Generate a unique room ID using nanoid
+    const generateRoomId = () => {
+        const newRoomId = nanoid(10); // Generates a 10-character unique room ID
+        setRoom(newRoomId);  // Set the generated room ID in the state
+    };
 
-    // When the component mounts, rejoin the chat if needed
-    useEffect(() => {
-        if (room && username) {
-            socket.emit("join-room", { room, username });
-            setJoined(true);
-        }
-    }, []); // Runs once on mount
+    // Handle copy room ID to clipboard
+    const copyRoomId = () => {
+        navigator.clipboard.writeText(room);
+    };
 
     useEffect(() => {
         socket.on("message", (data) => {
@@ -120,6 +42,7 @@ export default function ChatPage() {
             setMessages((prev) => [...prev, { sender: "system", message, time: formatTime() }]);
         });
 
+        // Cleanup listeners
         return () => {
             socket.off("message");
             socket.off("user_joined");
@@ -131,32 +54,40 @@ export default function ChatPage() {
         if (room && username) {
             socket.emit("join-room", { room, username });
             setJoined(true);
-            localStorage.setItem("room", room); // Save room ID
-            localStorage.setItem("username", username); // Save username
         }
     };
 
     const handleLeave = () => {
         socket.emit("leave-room", { room, username });
         setJoined(false);
-        localStorage.removeItem("room"); // Remove room ID
-        localStorage.removeItem("username"); // Remove username
     };
 
     const sendMessage = () => {
         if (message.trim()) {
-            const data = { room, message, sender: username, time: formatTime(), repliedMessage };
+            const data = {
+                room,
+                message,
+                sender: username,
+                time: formatTime(),
+                repliedMessage, // Include the replied message if any
+            };
             setMessages((prev) => [...prev, data]);
-            socket.emit("message", data);
-            setMessage("");
-            setRepliedMessage(null);
+            socket.emit("message", data); // Emit the message to the backend
+            setMessage(""); // Clear the input field
+            setRepliedMessage(null); // Clear the replied message after sending
         }
     };
 
     const handleReply = (msg) => {
-        setRepliedMessage(msg);
-        setMessage(`@${msg.sender}: `);
+        setRepliedMessage(msg); // Store the message being replied to
+        setMessage(`@${msg.sender}:`); // Optionally, pre-fill the input field with the reply
     };
+    const inputRef = useRef(null);
+    useEffect(() => {
+        if (joined) {
+            inputRef.current?.focus();
+        }
+    }, [joined]);
     return (
         <div className="relative min-h-screen overflow-hidden flex">
             {/* Background with gradient and floating balls */}
@@ -191,7 +122,6 @@ export default function ChatPage() {
                         />
                         <button
                             onClick={handleJoin}
-                            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                             className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg  hover:bg-blue-600 transition"
                         >
                             Join Room
@@ -306,6 +236,7 @@ export default function ChatPage() {
                         {/* Message Input */}
                         <div className="fixed md:bottom-0 bottom-14  left-0  w-full md:py-4 py-3 bg-white/20 backdrop-blur-md md:px-6 px-2 shadow-md flex items-center gap-2 border-t">
                             <input
+                                ref={inputRef}
                                 type="text"
                                 placeholder="Type your message..."
                                 value={message}
